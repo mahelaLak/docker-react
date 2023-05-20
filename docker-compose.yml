@@ -1,0 +1,19 @@
+version: '3'
+services: #containers
+  web: #name of container 1
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules # get the node modules inside container
+      - .:/app  #map current folder outside container to app folder inside container
+  tests: #name of container 2
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app    
+    command: ["npm", "run", "test"] #override docker files npm rn start command
